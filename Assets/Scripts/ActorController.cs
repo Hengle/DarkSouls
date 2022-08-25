@@ -54,7 +54,7 @@ public class ActorController : MonoBehaviour
 
 
     ///
-    ///
+    /// Message processing block
     ///
     public void OnJumpEnter()
     {
@@ -63,9 +63,25 @@ public class ActorController : MonoBehaviour
         thrustVec = new Vector3(0, jumpVeclocity, 0);
     }
 
-    public void OnJumpExit()
+    public void IsGround()
+    {
+        anim.SetBool("IsGround", true);
+    }
+
+    public void IsNotGround()
+    {
+        anim.SetBool("IsGround", false);
+    }
+
+    public void OnGroundEnter()
     {
         pi.inputEnabled = true;
         lockPlanar = false;
+    }
+
+    public void OnFallEnter()
+    {
+        pi.inputEnabled = false;
+        lockPlanar = true;
     }
 }
