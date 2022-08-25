@@ -627,7 +627,7 @@ MonoBehaviour:
   pi: {fileID: 0}
   walkSpeed: 2
   runMultiplier: 2.7
-  jumpVeclocity: 4
+  jumpVeclocity: 6
   anim: {fileID: 0}
 --- !u!54 &1248282588
 Rigidbody:
