@@ -9,8 +9,9 @@ public class ActorController : MonoBehaviour
     public PlayerInput pi;
     public float walkSpeed = 2.0f;
     public float runMultiplier = 2.0f;
-    public float jumpVeclocity = 5.0f;
 
+    public float jumpVeclocity = 5.0f;
+    public float rollVeclocity = 1.0f;
 
     [SerializeField] private Animator anim;
     private Rigidbody rb;
@@ -29,6 +30,11 @@ public class ActorController : MonoBehaviour
     void Update()
     {
         anim.SetFloat("forward", pi.Dmag * Mathf.Lerp(anim.GetFloat("forward"), pi.run ? 2.0f : 1.0f, 0.5f));
+
+        if (rb.velocity.magnitude > 1.0f)
+        {
+            anim.SetTrigger("roll");
+        }
 
         if (pi.jump)
         {
@@ -83,5 +89,23 @@ public class ActorController : MonoBehaviour
     {
         pi.inputEnabled = false;
         lockPlanar = true;
+    }
+
+    public void OnRollEnter()
+    {
+        pi.inputEnabled = false;
+        lockPlanar = true;
+        thrustVec = new Vector3(0, rollVeclocity, 0);
+    }
+
+    public void OnJabEnter()
+    {
+        pi.inputEnabled = false;
+        lockPlanar = true;
+    }
+
+    public void OnJabUpdate()
+    {
+        thrustVec = model.transform.forward * anim.GetFloat("jabVeclocity");
     }
 }
