@@ -31,8 +31,8 @@ public class CameraController : MonoBehaviour
     {
         Vector3 tempModelEular = model.transform.eulerAngles;
 
-        playerHandle.transform.Rotate(Vector3.up, pi.Jright * horizontalSpeed * Time.deltaTime);
-        tempEulerX -= pi.Jup * -verticalSpeed * Time.deltaTime;
+        playerHandle.transform.Rotate(Vector3.up, pi.Jright * horizontalSpeed * Time.fixedDeltaTime);
+        tempEulerX -= pi.Jup * -verticalSpeed * Time.fixedDeltaTime;
         tempEulerX = Mathf.Clamp(tempEulerX, -40, 30);
         cameraHandle.transform.localEulerAngles = new Vector3(tempEulerX, 0, 0);
 

@@ -41,6 +41,11 @@ public class ActorController : MonoBehaviour
             anim.SetTrigger("jump");
         }
 
+        if (pi.attack && CheckState("ground") && anim.GetBool("isGround"))
+        {
+            anim.SetTrigger("attack");
+        }
+
         if (pi.Dmag > 0.1f)
         {
             model.transform.forward = Vector3.Slerp(model.transform.forward, pi.Dvec, 0.3f);
@@ -50,6 +55,8 @@ public class ActorController : MonoBehaviour
         {
             planarVec = pi.Dmag * model.transform.forward * walkSpeed * (pi.run ? runMultiplier : 1.0f);
         }
+
+        //print(CheckState("idle", "Attack"));
     }
 
     private void FixedUpdate()
@@ -58,6 +65,10 @@ public class ActorController : MonoBehaviour
         thrustVec = Vector3.zero;
     }
 
+    bool CheckState(string stateName, string layerName = "Base Layer")
+    {
+        return anim.GetCurrentAnimatorStateInfo(anim.GetLayerIndex(layerName)).IsName(stateName);
+    }
 
     ///
     /// Message processing block
@@ -107,5 +118,22 @@ public class ActorController : MonoBehaviour
     public void OnJabUpdate()
     {
         thrustVec = model.transform.forward * anim.GetFloat("jabVeclocity");
+    }
+
+    public void OnAttack1hAEnter()
+    {
+        pi.inputEnabled = false;
+        anim.SetLayerWeight(anim.GetLayerIndex("Attack"), 1.0f);
+    }
+
+    public void OnAttack1hAUpdate()
+    {
+        thrustVec = model.transform.forward * anim.GetFloat("attackVeclocity");
+    }
+
+    public void OnAttackIdle()
+    {
+        pi.inputEnabled = true;
+        anim.SetLayerWeight(anim.GetLayerIndex("Attack"), 0);
     }
 }
