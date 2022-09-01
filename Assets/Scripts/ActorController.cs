@@ -82,12 +82,12 @@ public class ActorController : MonoBehaviour
 
     public void IsGround()
     {
-        anim.SetBool("IsGround", true);
+        anim.SetBool("isGround", true);
     }
 
     public void IsNotGround()
     {
-        anim.SetBool("IsGround", false);
+        anim.SetBool("isGround", false);
     }
 
     public void OnGroundEnter()
